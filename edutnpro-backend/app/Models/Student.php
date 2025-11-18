@@ -161,6 +161,64 @@ class Student extends Model
         return $this->hasMany(Prediction::class);
     }
 
+    // Social Learning Relations
+    public function createdStudyGroups(): HasMany
+    {
+        return $this->hasMany(StudyGroup::class, 'creator_id');
+    }
+
+    public function studyGroups(): BelongsToMany
+    {
+        return $this->belongsToMany(StudyGroup::class, 'study_group_members')
+            ->withPivot('role', 'status', 'joined_at')
+            ->withTimestamps();
+    }
+
+    public function tutorProfile(): HasOne
+    {
+        return $this->hasOne(TutorProfile::class);
+    }
+
+    public function tutorSessions(): HasMany
+    {
+        return $this->hasMany(TutorSession::class, 'tutor_id');
+    }
+
+    public function tuteeSessions(): HasMany
+    {
+        return $this->hasMany(TutorSession::class, 'tutee_id');
+    }
+
+    public function sharedResources(): HasMany
+    {
+        return $this->hasMany(SharedResource::class);
+    }
+
+    public function helpRequests(): HasMany
+    {
+        return $this->hasMany(HelpRequest::class);
+    }
+
+    public function helpAnswers(): HasMany
+    {
+        return $this->hasMany(HelpAnswer::class);
+    }
+
+    public function forumTopics(): HasMany
+    {
+        return $this->hasMany(ForumTopic::class);
+    }
+
+    public function forumReplies(): HasMany
+    {
+        return $this->hasMany(ForumReply::class);
+    }
+
+    public function collaborativeNotes(): HasMany
+    {
+        return $this->hasMany(CollaborativeNote::class, 'creator_id');
+    }
+
     // Accessors
     public function getFullNameAttribute(): string
     {

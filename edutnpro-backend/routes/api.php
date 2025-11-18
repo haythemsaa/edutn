@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\StudentApiController;
 use App\Http\Controllers\Api\TeacherApiController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\GamificationController;
+use App\Http\Controllers\SocialLearningController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -126,6 +127,42 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/leaderboard', [GamificationController::class, 'getLeaderboard']);
         Route::get('/challenges', [GamificationController::class, 'getChallenges']);
         Route::get('/xp-transactions', [GamificationController::class, 'getTransactions']);
+
+        // Social Learning Features
+        // Study Groups
+        Route::get('/study-groups', [SocialLearningController::class, 'getStudyGroups']);
+        Route::get('/study-groups/my', [SocialLearningController::class, 'getMyStudyGroups']);
+        Route::post('/study-groups', [SocialLearningController::class, 'createStudyGroup']);
+        Route::post('/study-groups/{studyGroup}/join', [SocialLearningController::class, 'joinStudyGroup']);
+        Route::get('/study-groups/{studyGroup}/posts', [SocialLearningController::class, 'getGroupPosts']);
+        Route::post('/study-groups/{studyGroup}/posts', [SocialLearningController::class, 'createGroupPost']);
+
+        // Tutoring
+        Route::get('/tutors', [SocialLearningController::class, 'getTutors']);
+        Route::post('/tutoring/request', [SocialLearningController::class, 'requestTutoring']);
+        Route::post('/tutoring/{session}/complete', [SocialLearningController::class, 'completeTutoringSession']);
+
+        // Subject Forums
+        Route::get('/forums', [SocialLearningController::class, 'getSubjectForums']);
+        Route::get('/forums/{forum}/topics', [SocialLearningController::class, 'getForumTopics']);
+        Route::post('/forums/{forum}/topics', [SocialLearningController::class, 'createForumTopic']);
+        Route::post('/forums/topics/{topic}/reply', [SocialLearningController::class, 'replyToTopic']);
+        Route::post('/forums/topics/{topic}/replies/{reply}/best-answer', [SocialLearningController::class, 'markBestAnswer']);
+
+        // Shared Resources
+        Route::get('/resources', [SocialLearningController::class, 'getSharedResources']);
+        Route::post('/resources', [SocialLearningController::class, 'uploadResource']);
+
+        // Help Requests (Q&A)
+        Route::get('/help-requests', [SocialLearningController::class, 'getHelpRequests']);
+        Route::post('/help-requests', [SocialLearningController::class, 'createHelpRequest']);
+        Route::post('/help-requests/{helpRequest}/answer', [SocialLearningController::class, 'answerHelpRequest']);
+        Route::post('/help-requests/{helpRequest}/answers/{answer}/accept', [SocialLearningController::class, 'acceptAnswer']);
+
+        // Collaborative Notes
+        Route::get('/notes', [SocialLearningController::class, 'getCollaborativeNotes']);
+        Route::post('/notes', [SocialLearningController::class, 'createCollaborativeNote']);
+        Route::put('/notes/{note}', [SocialLearningController::class, 'editCollaborativeNote']);
 
         // Library
         Route::get('/library/loans', [StudentApiController::class, 'getMyLoans']);
