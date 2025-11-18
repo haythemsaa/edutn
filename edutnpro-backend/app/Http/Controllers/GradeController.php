@@ -26,7 +26,26 @@ class GradeController extends Controller
 
     public function store(Request $request)
     {
-        return redirect()->route('grades.index')->with('success', 'Fonctionnalité en cours de développement');
+        $validated = $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'subject_id' => 'required|exists:subjects,id',
+            'term_id' => 'required|exists:terms,id',
+            'teacher_id' => 'nullable|exists:teachers,id',
+            'grade_type' => 'required|in:continuous,exam,final',
+            'score' => 'required|numeric|min:0|max:20',
+            'max_score' => 'required|numeric|min:0',
+            'date' => 'required|date',
+            'comment' => 'nullable|string',
+        ]);
+
+        // Set teacher_id to current user's teacher record if not provided
+        if (!$validated['teacher_id'] && auth()->user()->teacher) {
+            $validated['teacher_id'] = auth()->user()->teacher->id;
+        }
+
+        Grade::create($validated);
+
+        return redirect()->route('grades.index')->with('success', 'Note ajoutée avec succès!');
     }
 
     public function show(Grade $grade)
@@ -45,11 +64,35 @@ class GradeController extends Controller
 
     public function update(Request $request, Grade $grade)
     {
-        return redirect()->route('grades.index')->with('success', 'Fonctionnalité en cours de développement');
+        $validated = $request->validate([
+            'student_id' => 'required|exists:students,id',
+            'subject_id' => 'required|exists:subjects,id',
+            'term_id' => 'required|exists:terms,id',
+            'teacher_id' => 'nullable|exists:teachers,id',
+            'grade_type' => 'required|in:continuous,exam,final',
+            'score' => 'required|numeric|min:0|max:20',
+            'max_score' => 'required|numeric|min:0',
+            'date' => 'required|date',
+            'comment' => 'nullable|string',
+        ]);
+
+        // Set teacher_id to current user's teacher record if not provided
+        if (!$validated['teacher_id'] && auth()->user()->teacher) {
+            $validated['teacher_id'] = auth()->user()->teacher->id;
+        }
+
+        $grade->update($validated);
+
+        return redirect()->route('grades.index')->with('success', 'Note modifiée avec succès!');
     }
 
     public function destroy(Grade $grade)
     {
-        return redirect()->route('grades.index')->with('success', 'Fonctionnalité en cours de développement');
+        try {
+            $grade->delete();
+            return redirect()->route('grades.index')->with('success', 'Note supprimée avec succès!');
+        } catch (\Exception $e) {
+            return redirect()->route('grades.index')->with('error', 'Erreur lors de la suppression: ' . $e->getMessage());
+        }
     }
 }
