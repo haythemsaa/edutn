@@ -37,6 +37,15 @@ class ApiClient {
     return _handleResponse(response);
   }
 
+  // Dashboard
+  Future<Map<String, dynamic>> getDashboard() async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/parent/dashboard'),
+      headers: await _getHeaders(),
+    );
+    return _handleResponse(response)['data'];
+  }
+
   // Children (Students)
   Future<List<dynamic>> getMyChildren() async {
     final response = await http.get(

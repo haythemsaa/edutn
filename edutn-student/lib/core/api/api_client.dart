@@ -26,6 +26,15 @@ class ApiClient {
     }
   }
 
+  // Dashboard API
+  Future<Map<String, dynamic>> getDashboard() async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/student/dashboard'),
+      headers: await _getHeaders(),
+    );
+    return _handleResponse(response)['data'];
+  }
+
   // Assignments API
   Future<List<dynamic>> getAssignments() async {
     final response = await http.get(
