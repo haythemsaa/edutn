@@ -61,9 +61,20 @@ class ApiClient {
   }
 
   // Grades API
-  Future<List<dynamic>> getGrades() async {
+  Future<Map<String, dynamic>> getGrades({String? term}) async {
+    var url = '$baseUrl/student/grades';
+    if (term != null) url += '?term=$term';
+
     final response = await http.get(
-      Uri.parse('$baseUrl/student/grades'),
+      Uri.parse(url),
+      headers: await _getHeaders(),
+    );
+    return _handleResponse(response)['data'];
+  }
+
+  Future<Map<String, dynamic>> getReportCard(String term) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/student/report-cards/$term'),
       headers: await _getHeaders(),
     );
     return _handleResponse(response)['data'];

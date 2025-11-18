@@ -35,4 +35,53 @@ class EmployeeLeave extends Model
     {
         return $this->belongsTo(User::class, 'approved_by');
     }
+
+    public function calculateTotalDays(): int
+    {
+        if (!$this->start_date || !$this->end_date) {
+            return 0;
+        }
+
+        // Count only working days (exclude weekends)
+        $totalDays = 0;
+        $current = $this->start_date->copy();
+
+        while ($current->lte($this->end_date)) {
+            // Skip Fridays and Saturdays (Tunisia weekend)
+            if (!in_array($current->dayOfWeek, [5, 6])) {
+                $totalDays++;
+            }
+            $current->addDay();
+        }
+
+        return $totalDays;
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === 'pending';
+    }
+
+    public function isApproved(): bool
+    {
+        return $this->status === 'approved';
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->status === 'rejected';
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->status === 'cancelled';
+    }
+
+    public function isActive(): bool
+    {
+        $now = now();
+        return $this->isApproved() &&
+               $this->start_date->lte($now) &&
+               $this->end_date->gte($now);
+    }
 }

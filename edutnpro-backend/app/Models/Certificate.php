@@ -35,4 +35,50 @@ class Certificate extends Model
     {
         return $this->belongsTo(User::class, 'issued_by');
     }
+
+    public function isValid(): bool
+    {
+        if ($this->status !== 'issued') {
+            return false;
+        }
+
+        if ($this->valid_until && $this->valid_until->lt(now())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function isRevoked(): bool
+    {
+        return $this->status === 'revoked';
+    }
+
+    public function getVerificationUrl(): string
+    {
+        return route('certificates.verify', [
+            'certificate' => $this->id,
+            'code' => $this->certificate_number,
+        ]);
+    }
+
+    public function generateCertificateNumber(string $type): string
+    {
+        $prefix = match ($type) {
+            'enrollment' => 'ENR',
+            'completion' => 'CMP',
+            'achievement' => 'ACH',
+            'attendance' => 'ATT',
+            'conduct' => 'CND',
+            'transcript' => 'TRN',
+            default => 'CRT',
+        };
+
+        return $prefix . '-' . date('Y') . '-' . str_pad(
+            Certificate::where('certificate_type', $type)->count() + 1,
+            5,
+            '0',
+            STR_PAD_LEFT
+        );
+    }
 }

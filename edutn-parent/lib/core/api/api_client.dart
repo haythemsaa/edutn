@@ -68,6 +68,17 @@ class ApiClient {
   }
 
   // Attendance
+  Future<Map<String, dynamic>> getAttendance({String? month}) async {
+    var url = '$baseUrl/parent/attendance';
+    if (month != null) url += '?month=$month';
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: await _getHeaders(),
+    );
+    return _handleResponse(response)['data'];
+  }
+
   Future<List<dynamic>> getChildAttendance(int studentId, {String? month}) async {
     var url = '$baseUrl/parent/students/$studentId/attendance';
     if (month != null) url += '?month=$month';
