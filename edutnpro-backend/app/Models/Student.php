@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Student extends Model
 {
@@ -56,6 +57,38 @@ class Student extends Model
     public function grades(): HasMany
     {
         return $this->hasMany(Grade::class);
+    }
+
+    public function parents(): BelongsToMany
+    {
+        return $this->belongsToMany(ParentModel::class, 'student_parent')
+            ->withPivot('relationship', 'is_primary_contact', 'can_pick_up', 'can_authorize_medical')
+            ->withTimestamps();
+    }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function emergencyContacts(): HasMany
+    {
+        return $this->hasMany(EmergencyContact::class);
+    }
+
+    public function reportCards(): HasMany
+    {
+        return $this->hasMany(ReportCard::class);
     }
 
     // Accessors

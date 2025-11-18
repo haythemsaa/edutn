@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Teacher extends Model
 {
@@ -33,6 +34,21 @@ class Teacher extends Model
     public function grades(): HasMany
     {
         return $this->hasMany(Grade::class);
+    }
+
+    public function classSubjects(): HasMany
+    {
+        return $this->hasMany(ClassSubject::class);
+    }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function exams(): BelongsToMany
+    {
+        return $this->belongsToMany(Exam::class, 'exam_supervisors')->withTimestamps();
     }
 
     public function getFullNameAttribute(): string
