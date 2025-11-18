@@ -3,37 +3,41 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\*;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ReportCard extends Model
 {
     protected $fillable = [
-    'student_id',
-    'term_id',
-    'general_average',
-    'class_rank',
-    'class_size',
-    'mention',
-    'pdf_path',
-    'data',
-    'generated_at'
-];
+        'student_id', 'class_section_id', 'school_id', 'academic_year', 'term',
+        'total_average', 'class_rank', 'total_students', 'total_absences',
+        'general_appreciation', 'general_appreciation_ar', 'conduct_comment', 'conduct_comment_ar',
+        'status', 'published_at', 'sent_at', 'file_path',
+    ];
 
     protected $casts = [
-    'general_average' => 'decimal:2',
-    'class_rank' => 'integer',
-    'class_size' => 'integer',
-    'data' => 'array',
-    'generated_at' => 'datetime'
-];
+        'total_average' => 'decimal:2',
+        'published_at' => 'datetime',
+        'sent_at' => 'datetime',
+    ];
 
-    public function student()
+    public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
 
-    public function term()
+    public function classSection(): BelongsTo
     {
-        return $this->belongsTo(Term::class);
+        return $this->belongsTo(ClassSection::class);
+    }
+
+    public function school(): BelongsTo
+    {
+        return $this->belongsTo(School::class);
+    }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(ReportCardItem::class);
     }
 }

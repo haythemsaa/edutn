@@ -9,12 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Subject extends Model
 {
     protected $fillable = [
-        'school_id', 'level_id', 'name_ar', 'name_fr',
-        'code', 'coefficient', 'description', 'is_active',
+        'school_id', 'name', 'name_ar', 'code', 'description', 'description_ar',
+        'category', 'coefficient', 'color', 'is_active',
     ];
 
     protected $casts = [
-        'coefficient' => 'decimal:1',
         'is_active' => 'boolean',
     ];
 
@@ -23,13 +22,18 @@ class Subject extends Model
         return $this->belongsTo(School::class);
     }
 
-    public function level(): BelongsTo
+    public function classDiaries(): HasMany
     {
-        return $this->belongsTo(Level::class);
+        return $this->hasMany(ClassDiary::class);
     }
 
-    public function grades(): HasMany
+    public function timetableEntries(): HasMany
     {
-        return $this->hasMany(Grade::class);
+        return $this->hasMany(TimetableEntry::class);
+    }
+
+    public function reportCardItems(): HasMany
+    {
+        return $this->hasMany(ReportCardItem::class);
     }
 }
