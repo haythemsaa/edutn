@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Student extends Model
 {
@@ -89,6 +90,58 @@ class Student extends Model
     public function reportCards(): HasMany
     {
         return $this->hasMany(ReportCard::class);
+    }
+
+    // Gamification Relations
+    public function badges(): BelongsToMany
+    {
+        return $this->belongsToMany(Badge::class, 'student_badges')
+            ->withPivot('earned_at', 'progress', 'metadata')
+            ->withTimestamps();
+    }
+
+    public function points(): HasOne
+    {
+        return $this->hasOne(StudentPoint::class);
+    }
+
+    public function achievements(): HasMany
+    {
+        return $this->hasMany(Achievement::class);
+    }
+
+    // Library Relations
+    public function libraryLoans(): HasMany
+    {
+        return $this->hasMany(LibraryLoan::class);
+    }
+
+    public function readingStats(): HasMany
+    {
+        return $this->hasMany(ReadingStat::class);
+    }
+
+    // Transport Relations
+    public function transportation(): HasOne
+    {
+        return $this->hasOne(StudentTransportation::class);
+    }
+
+    // Canteen Relations
+    public function mealReservations(): HasMany
+    {
+        return $this->hasMany(MealReservation::class);
+    }
+
+    public function dietaryRestrictions(): HasMany
+    {
+        return $this->hasMany(DietaryRestriction::class);
+    }
+
+    // Analytics Relations
+    public function predictions(): HasMany
+    {
+        return $this->hasMany(Prediction::class);
     }
 
     // Accessors

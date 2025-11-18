@@ -12,6 +12,12 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\BadgeController;
+use App\Http\Controllers\LibraryController;
+use App\Http\Controllers\BusController;
+use App\Http\Controllers\CanteenController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\AnalyticsController;
 use Illuminate\Support\Facades\Route;
 
 // Redirect root to dashboard or login
@@ -54,6 +60,31 @@ Route::middleware(['auth'])->group(function () {
     // Communication
     Route::resource('announcements', AnnouncementController::class);
     Route::resource('messages', MessageController::class);
+
+    // Gamification
+    Route::resource('badges', BadgeController::class);
+    Route::get('/leaderboard', [BadgeController::class, 'leaderboard'])->name('leaderboard');
+
+    // Library
+    Route::resource('library', LibraryController::class);
+    Route::post('/library/{book}/loan', [LibraryController::class, 'loan'])->name('library.loan');
+    Route::post('/library/loans/{loan}/return', [LibraryController::class, 'return'])->name('library.return');
+
+    // Transport
+    Route::resource('buses', BusController::class);
+    Route::get('/transport/tracking', [BusController::class, 'tracking'])->name('transport.tracking');
+
+    // Canteen
+    Route::resource('canteen', CanteenController::class);
+    Route::post('/canteen/reserve', [CanteenController::class, 'reserve'])->name('canteen.reserve');
+
+    // Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+
+    // Analytics & Reports
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
+    Route::get('/analytics/predictions', [AnalyticsController::class, 'predictions'])->name('analytics.predictions');
 
     // Schools Management (Admin only)
     Route::middleware('role:super_admin|admin')->group(function () {

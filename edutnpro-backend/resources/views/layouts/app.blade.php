@@ -85,6 +85,31 @@
                                 <i class="bi bi-envelope"></i> Messages
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('library*') ? 'active' : '' }}" href="{{ route('library.index') }}">
+                                <i class="bi bi-book"></i> Bibliothèque
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('buses*') || request()->is('transport*') ? 'active' : '' }}" href="{{ route('buses.index') }}">
+                                <i class="bi bi-bus-front"></i> Transport
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('canteen*') ? 'active' : '' }}" href="{{ route('canteen.index') }}">
+                                <i class="bi bi-cup-straw"></i> Cantine
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('leaderboard') || request()->is('badges*') ? 'active' : '' }}" href="{{ route('leaderboard') }}">
+                                <i class="bi bi-trophy"></i> Classement
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('analytics*') ? 'active' : '' }}" href="{{ route('analytics.index') }}">
+                                <i class="bi bi-graph-up"></i> Analytics
+                            </a>
+                        </li>
                         @can('view-schools')
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('schools*') ? 'active' : '' }}" href="{{ route('schools.index') }}">

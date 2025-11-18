@@ -83,4 +83,33 @@ class School extends Model
     {
         return $this->hasMany(Announcement::class);
     }
+
+    // Library Relations
+    public function libraryBooks(): HasMany
+    {
+        return $this->hasMany(LibraryBook::class);
+    }
+
+    // Transport Relations
+    public function buses(): HasMany
+    {
+        return $this->hasMany(Bus::class);
+    }
+
+    // Canteen Relations
+    public function canteenMenus(): HasMany
+    {
+        return $this->hasMany(CanteenMenu::class);
+    }
+
+    // Analytics Relations
+    public function analyticsSnapshots(): HasMany
+    {
+        return $this->hasMany(AnalyticsSnapshot::class);
+    }
+
+    public function leaderboards(): HasMany
+    {
+        return $this->hasMany(Leaderboard::class);
+    }
 }
