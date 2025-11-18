@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Teacher;
+use App\Models\School;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -11,7 +13,8 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        //
+        $teachers = Teacher::with(['school', 'user'])->paginate(20);
+        return view('teachers.index', compact('teachers'));
     }
 
     /**
@@ -19,7 +22,8 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        //
+        $schools = School::where('is_active', true)->get();
+        return view('teachers.create', compact('schools'));
     }
 
     /**
@@ -27,38 +31,43 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // À implémenter
+        return redirect()->route('teachers.index')->with('success', 'Fonctionnalité en cours de développement');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Teacher $teacher)
     {
-        //
+        $teacher->load(['school', 'user', 'grades']);
+        return view('teachers.show', compact('teacher'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Teacher $teacher)
     {
-        //
+        $schools = School::where('is_active', true)->get();
+        return view('teachers.edit', compact('teacher', 'schools'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Teacher $teacher)
     {
-        //
+        // À implémenter
+        return redirect()->route('teachers.index')->with('success', 'Fonctionnalité en cours de développement');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Teacher $teacher)
     {
-        //
+        // À implémenter
+        return redirect()->route('teachers.index')->with('success', 'Fonctionnalité en cours de développement');
     }
 }

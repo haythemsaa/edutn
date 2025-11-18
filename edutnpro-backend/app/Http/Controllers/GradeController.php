@@ -2,63 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grade;
+use App\Models\Student;
+use App\Models\Subject;
+use App\Models\Term;
 use Illuminate\Http\Request;
 
 class GradeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $grades = Grade::with(['student', 'subject', 'term'])->latest()->paginate(20);
+        return view('grades.index', compact('grades'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $students = Student::where('status', 'active')->get();
+        $subjects = Subject::where('is_active', true)->get();
+        $terms = Term::all();
+        return view('grades.create', compact('students', 'subjects', 'terms'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('grades.index')->with('success', 'Fonctionnalité en cours de développement');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Grade $grade)
     {
-        //
+        $grade->load(['student', 'subject', 'term', 'teacher']);
+        return view('grades.show', compact('grade'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Grade $grade)
     {
-        //
+        $students = Student::where('status', 'active')->get();
+        $subjects = Subject::where('is_active', true)->get();
+        $terms = Term::all();
+        return view('grades.edit', compact('grade', 'students', 'subjects', 'terms'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Grade $grade)
     {
-        //
+        return redirect()->route('grades.index')->with('success', 'Fonctionnalité en cours de développement');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Grade $grade)
     {
-        //
+        return redirect()->route('grades.index')->with('success', 'Fonctionnalité en cours de développement');
     }
 }
