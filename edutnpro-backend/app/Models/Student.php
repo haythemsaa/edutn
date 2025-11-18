@@ -100,6 +100,23 @@ class Student extends Model
             ->withTimestamps();
     }
 
+    public function achievement(): HasOne
+    {
+        return $this->hasOne(StudentAchievement::class);
+    }
+
+    public function xpTransactions(): HasMany
+    {
+        return $this->hasMany(XpTransaction::class);
+    }
+
+    public function challenges(): BelongsToMany
+    {
+        return $this->belongsToMany(Challenge::class, 'student_challenges')
+            ->withPivot('progress', 'completed_at', 'xp_earned')
+            ->withTimestamps();
+    }
+
     public function points(): HasOne
     {
         return $this->hasOne(StudentPoint::class);

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ParentController;
 use App\Http\Controllers\Api\StudentApiController;
 use App\Http\Controllers\Api\TeacherApiController;
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\GamificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -116,11 +117,15 @@ Route::middleware('auth:sanctum')->group(function () {
         // Attendance
         Route::get('/attendance', [StudentApiController::class, 'getAttendance']);
 
-        // Gamification
-        Route::get('/badges', [StudentApiController::class, 'getMyBadges']);
-        Route::get('/points', [StudentApiController::class, 'getMyPoints']);
-        Route::get('/leaderboard', [StudentApiController::class, 'getLeaderboard']);
-        Route::get('/achievements', [StudentApiController::class, 'getAchievements']);
+        // Gamification (using new GamificationController)
+        Route::get('/achievement', function(Request $request) {
+            $student = \App\Models\Student::findOrFail($request->user()->userable_id);
+            return app(GamificationController::class)->getAchievement($student);
+        });
+        Route::get('/badges', [GamificationController::class, 'getBadges']);
+        Route::get('/leaderboard', [GamificationController::class, 'getLeaderboard']);
+        Route::get('/challenges', [GamificationController::class, 'getChallenges']);
+        Route::get('/xp-transactions', [GamificationController::class, 'getTransactions']);
 
         // Library
         Route::get('/library/loans', [StudentApiController::class, 'getMyLoans']);
