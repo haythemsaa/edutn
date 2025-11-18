@@ -110,6 +110,81 @@
                                 <i class="bi bi-graph-up"></i> Analytics
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('subjects*') ? 'active' : '' }}" href="{{ route('subjects.index') }}">
+                                <i class="bi bi-journals"></i> Matières
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('classrooms*') ? 'active' : '' }}" href="{{ route('classrooms.index') }}">
+                                <i class="bi bi-door-open"></i> Salles
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('class-sections*') ? 'active' : '' }}" href="{{ route('class-sections.index') }}">
+                                <i class="bi bi-diagram-3"></i> Classes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('class-diary*') ? 'active' : '' }}" href="{{ route('class-diary.index') }}">
+                                <i class="bi bi-journal-bookmark"></i> Cahier Texte
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('timetables*') ? 'active' : '' }}" href="{{ route('timetables.index') }}">
+                                <i class="bi bi-calendar3"></i> Emploi du temps
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('report-cards*') ? 'active' : '' }}" href="{{ route('report-cards.index') }}">
+                                <i class="bi bi-file-earmark-text"></i> Bulletins
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('assignments*') ? 'active' : '' }}" href="{{ route('assignments.index') }}">
+                                <i class="bi bi-list-check"></i> Devoirs
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('discipline*') ? 'active' : '' }}" href="{{ route('discipline.index') }}">
+                                <i class="bi bi-shield-exclamation"></i> Discipline
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('events*') ? 'active' : '' }}" href="{{ route('events.index') }}">
+                                <i class="bi bi-calendar-event"></i> Événements
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('online-classes*') ? 'active' : '' }}" href="{{ route('online-classes.index') }}">
+                                <i class="bi bi-camera-video"></i> Classes en ligne
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('appointments*') ? 'active' : '' }}" href="{{ route('appointments.index') }}">
+                                <i class="bi bi-calendar2-check"></i> Rendez-vous
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('conversations*') ? 'active' : '' }}" href="{{ route('conversations.index') }}">
+                                <i class="bi bi-chat-dots"></i> Messagerie
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('certificates*') ? 'active' : '' }}" href="{{ route('certificates.index') }}">
+                                <i class="bi bi-award"></i> Certificats
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('documents*') ? 'active' : '' }}" href="{{ route('documents.index') }}">
+                                <i class="bi bi-file-earmark-pdf"></i> Documents
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('hr/*') ? 'active' : '' }}" href="{{ route('hr.contracts.index') }}">
+                                <i class="bi bi-person-workspace"></i> RH
+                            </a>
+                        </li>
                         @can('view-schools')
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('schools*') ? 'active' : '' }}" href="{{ route('schools.index') }}">
