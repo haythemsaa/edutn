@@ -3,6 +3,11 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\GradeController;
+use App\Http\Controllers\Api\AttendanceController;
+use App\Http\Controllers\Api\InvoiceController;
+use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\AnnouncementController;
+use App\Http\Controllers\Api\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +25,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Grades
     Route::apiResource('grades', GradeController::class);
+
+    // Attendances
+    Route::apiResource('attendances', AttendanceController::class);
+
+    // Finance
+    Route::apiResource('invoices', InvoiceController::class);
+    Route::apiResource('payments', PaymentController::class);
+
+    // Communication
+    Route::apiResource('announcements', AnnouncementController::class);
+    Route::apiResource('messages', MessageController::class);
 });

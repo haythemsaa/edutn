@@ -55,6 +55,36 @@
                                 <i class="bi bi-journal-text"></i> Notes
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('parents*') ? 'active' : '' }}" href="{{ route('parents.index') }}">
+                                <i class="bi bi-person-hearts"></i> Parents
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('attendances*') ? 'active' : '' }}" href="{{ route('attendances.index') }}">
+                                <i class="bi bi-calendar-check"></i> Présences
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('invoices*') ? 'active' : '' }}" href="{{ route('invoices.index') }}">
+                                <i class="bi bi-receipt"></i> Factures
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('payments*') ? 'active' : '' }}" href="{{ route('payments.index') }}">
+                                <i class="bi bi-cash-coin"></i> Paiements
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('announcements*') ? 'active' : '' }}" href="{{ route('announcements.index') }}">
+                                <i class="bi bi-megaphone"></i> Annonces
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('messages*') ? 'active' : '' }}" href="{{ route('messages.index') }}">
+                                <i class="bi bi-envelope"></i> Messages
+                            </a>
+                        </li>
                         @can('view-schools')
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('schools*') ? 'active' : '' }}" href="{{ route('schools.index') }}">
