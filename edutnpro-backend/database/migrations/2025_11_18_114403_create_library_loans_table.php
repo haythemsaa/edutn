@@ -27,7 +27,6 @@ return new class extends Migration
             $table->index(['student_id', 'status']);
             $table->index(['book_id', 'status']);
         });
-    });
     }
 
     /**

@@ -34,7 +34,6 @@ return new class extends Migration
             $table->index(['school_id', 'category']);
             $table->index('isbn');
         });
-    });
     }
 
     /**

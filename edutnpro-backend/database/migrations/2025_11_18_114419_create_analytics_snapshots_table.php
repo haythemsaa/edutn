@@ -29,7 +29,6 @@ return new class extends Migration
 
             $table->unique(['school_id', 'snapshot_date']);
         });
-    });
     }
 
     /**

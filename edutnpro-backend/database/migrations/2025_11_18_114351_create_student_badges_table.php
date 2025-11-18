@@ -23,7 +23,6 @@ return new class extends Migration
             $table->unique(['student_id', 'badge_id']);
             $table->index('earned_at');
         });
-    });
     }
 
     /**

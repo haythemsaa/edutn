@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('preferred_language', 10)->default('fr');
             $table->timestamps();
         });
-    });
     }
 
     /**

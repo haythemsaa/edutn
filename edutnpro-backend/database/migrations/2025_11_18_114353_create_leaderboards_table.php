@@ -23,7 +23,6 @@ return new class extends Migration
 
             $table->index(['type', 'period_start', 'period_end']);
         });
-    });
     }
 
     /**

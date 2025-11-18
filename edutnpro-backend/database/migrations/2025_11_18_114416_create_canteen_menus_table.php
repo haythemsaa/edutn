@@ -30,7 +30,6 @@ return new class extends Migration
 
             $table->unique(['school_id', 'menu_date', 'meal_type']);
         });
-    });
     }
 
     /**

@@ -24,7 +24,6 @@ return new class extends Migration
 
             $table->index(['route_id', 'stop_order']);
         });
-    });
     }
 
     /**

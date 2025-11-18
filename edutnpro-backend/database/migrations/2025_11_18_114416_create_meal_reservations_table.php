@@ -25,7 +25,6 @@ return new class extends Migration
             $table->unique(['student_id', 'menu_id', 'reservation_date']);
             $table->index(['reservation_date', 'status']);
         });
-    });
     }
 
     /**

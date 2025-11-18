@@ -25,7 +25,6 @@ return new class extends Migration
 
             $table->index(['school_rank', 'total_points']);
         });
-    });
     }
 
     /**

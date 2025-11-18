@@ -26,7 +26,6 @@ return new class extends Migration
             $table->index(['student_id', 'achieved_at']);
             $table->index('type');
         });
-    });
     }
 
     /**

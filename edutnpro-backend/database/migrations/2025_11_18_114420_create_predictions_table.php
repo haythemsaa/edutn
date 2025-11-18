@@ -28,7 +28,6 @@ return new class extends Migration
             $table->index(['student_id', 'prediction_type']);
             $table->index(['risk_level', 'prediction_date']);
         });
-    });
     }
 
     /**

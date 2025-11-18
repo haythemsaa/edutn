@@ -30,7 +30,6 @@ return new class extends Migration
             $table->index(['user_id', 'is_read']);
             $table->index(['type', 'created_at']);
         });
-    });
     }
 
     /**
