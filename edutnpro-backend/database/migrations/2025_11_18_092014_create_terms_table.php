@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('academic_year_id')->constrained('academic_years')->onDelete('cascade');
+            $table->string('name', 100);
+            $table->tinyInteger('term_number');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->timestamp('created_at')->useCurrent();
+
+            $table->index(['academic_year_id', 'term_number']);
         });
     }
 

@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('levels', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('school_id')->constrained('schools')->onDelete('cascade');
+            $table->string('name_ar', 100);
+            $table->string('name_fr', 100);
+            $table->enum('cycle', ['primary', 'middle', 'secondary']);
+            $table->tinyInteger('level_order');
+            $table->timestamp('created_at')->useCurrent();
+
+            $table->index(['school_id', 'cycle']);
         });
     }
 

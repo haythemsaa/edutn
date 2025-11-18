@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('academic_years', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('school_id')->constrained('schools')->onDelete('cascade');
+            $table->string('name', 100);
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->boolean('is_current')->default(false);
             $table->timestamps();
+
+            $table->index(['school_id', 'is_current']);
         });
     }
 
