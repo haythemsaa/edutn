@@ -383,4 +383,3 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/analytics/student/{student}', [AnalyticsController::class, 'getStudentAnalytics']);
         Route::get('/analytics/export', [AnalyticsController::class, 'exportData']);
     });
-});
