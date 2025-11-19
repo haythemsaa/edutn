@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\TeacherApiController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\GamificationController;
 use App\Http\Controllers\SocialLearningController;
+use App\Http\Controllers\AdminGamificationController;
+use App\Http\Controllers\AnalyticsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -349,5 +351,36 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/backup', [AdminController::class, 'backup']);
         Route::get('/settings', [AdminController::class, 'getSettings']);
         Route::put('/settings', [AdminController::class, 'updateSettings']);
+    });
+});
+
+    // ==========================================
+    // ADMIN ROUTES
+    // ==========================================
+    Route::prefix('admin')->middleware('role:admin')->name('api.admin.')->group(function () {
+        // Gamification Management
+        Route::get('/gamification/dashboard', [AdminGamificationController::class, 'getDashboard']);
+        Route::get('/gamification/settings', [AdminGamificationController::class, 'getSettings']);
+
+        // Badge Management
+        Route::get('/badges', [AdminGamificationController::class, 'getBadges']);
+        Route::post('/badges', [AdminGamificationController::class, 'createBadge']);
+        Route::put('/badges/{badge}', [AdminGamificationController::class, 'updateBadge']);
+        Route::delete('/badges/{badge}', [AdminGamificationController::class, 'deleteBadge']);
+
+        // Challenge Management
+        Route::get('/challenges', [AdminGamificationController::class, 'getChallenges']);
+        Route::post('/challenges', [AdminGamificationController::class, 'createChallenge']);
+        Route::put('/challenges/{challenge}', [AdminGamificationController::class, 'updateChallenge']);
+        Route::delete('/challenges/{challenge}', [AdminGamificationController::class, 'deleteChallenge']);
+
+        // Student Achievement Management
+        Route::post('/students/award-xp', [AdminGamificationController::class, 'awardXP']);
+        Route::post('/students/{student}/reset-achievement', [AdminGamificationController::class, 'resetStudentAchievement']);
+
+        // Analytics
+        Route::get('/analytics/dashboard', [AnalyticsController::class, 'getSchoolDashboard']);
+        Route::get('/analytics/student/{student}', [AnalyticsController::class, 'getStudentAnalytics']);
+        Route::get('/analytics/export', [AnalyticsController::class, 'exportData']);
     });
 });
